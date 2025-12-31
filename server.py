@@ -18,7 +18,7 @@ ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
 
 @app.route('/')
 def index():
-    return send_from_directory('.', 'interview-trainer.html')
+    return send_from_directory('.', 'index.html')
 
 @app.route('/api/analyze-resume', methods=['POST'])
 def analyze_resume():
@@ -633,3 +633,4 @@ if __name__ == '__main__':
         print("⚡ Powered by Google Gemini 2.0 Flash")
         print("=" * 60)
         app.run(debug=True, port=5000)
+
