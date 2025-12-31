@@ -13,8 +13,8 @@ app = Flask(__name__)
 CORS(app)
 
 # API KEY WITH ENV
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
+ELEVENLABS_API_KEY = os.environ.get("ELEVENLABS_API_KEY")
 
 if not GEMINI_API_KEY:
     print("⚠️  WARNING: GEMINI_API_KEY not set!")
@@ -651,6 +651,7 @@ if __name__ == '__main__':
         print("⚡ Powered by Google Gemini 2.0 Flash")
         print("=" * 60)
         app.run(debug=True, port=5000)
+
 
 
 
