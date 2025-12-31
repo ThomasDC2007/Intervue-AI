@@ -599,22 +599,37 @@ def elevenlabs_stt_proxy():
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    print("🚀 Starting AI Interview Trainer Server...")
-    print("=" * 60)
-    print("✅ FEATURES ENABLED:")
-    print("   - Interview Mode with Real-time Streaming")
-    print("   - Resume Analysis with Streaming TTS")
-    print("   - Cold Email Review with Streaming TTS")
-    print("   - Speech-to-Text (ElevenLabs Scribe)")
-    print("   - Text-to-Speech (ElevenLabs)")
-    print("=" * 60)
-    print("⚙️  API Configuration:")
-    print(f"   - Gemini API: {'✅ Configured' if GEMINI_API_KEY and GEMINI_API_KEY != 'YOUR_GEMINI_API_KEY_HERE' else '❌ Not Configured'}")
-    print(f"   - ElevenLabs API: {'✅ Configured' if ELEVENLABS_API_KEY and ELEVENLABS_API_KEY != 'YOUR_ELEVENLABS_API_KEY_HERE' else '❌ Not Configured'}")
-    print("=" * 60)
-    print("🌐 Server running at: http://localhost:5000")
-    print("📖 Open http://localhost:5000 in your browser")
-    print("=" * 60)
-    print("⚡ Powered by Google Gemini 2.0 Flash")
-    print("=" * 60)
-    app.run(debug=True, port=5000)
+    import os
+    
+    # Production settings
+    port = int(os.environ.get('PORT', 5000))
+    host = os.environ.get('HOST', '0.0.0.0')
+    
+    # Local development vs Production
+    is_production = os.environ.get('RENDER') == 'True' or os.environ.get('PORT') != '5000'
+    
+    if is_production:
+        print("🚀 Starting Intervue AI - PRODUCTION MODE")
+        print("🌐 Server running on 0.0.0.0:" + str(port))
+        app.run(host=host, port=port, debug=False)
+    else:
+        # Original development startup screen
+        print("🚀 Starting AI Interview Trainer Server...")
+        print("=" * 60)
+        print("✅ FEATURES ENABLED:")
+        print("   - Interview Mode with Real-time Streaming")
+        print("   - Resume Analysis with Streaming TTS")
+        print("   - Cold Email Review with Streaming TTS")
+        print("   - Speech-to-Text (ElevenLabs Scribe)")
+        print("   - Text-to-Speech (ElevenLabs)")
+        print("=" * 60)
+        print("⚙️  API Configuration:")
+        print(f"   - Gemini API: {'✅ Configured' if GEMINI_API_KEY and GEMINI_API_KEY != 'YOUR_GEMINI_API_KEY_HERE' else '❌ Not Configured'}")
+        print(f"   - ElevenLabs API: {'✅ Configured' if ELEVENLABS_API_KEY and ELEVENLABS_API_KEY != 'YOUR_ELEVENLABS_API_KEY_HERE' else '❌ Not Configured'}")
+        print("=" * 60)
+        print("🌐 Server running at: http://localhost:5000")
+        print("📖 Open http://localhost:5000 in your browser")
+        print("=" * 60)
+        print("⚡ Powered by Google Gemini 2.0 Flash")
+        print("=" * 60)
+        app.run(debug=True, port=5000)
