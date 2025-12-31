@@ -215,7 +215,7 @@ docker run -p 5000:5000 intervue-ai
   <em>© 2025 Intervue AI. Powered by Gemini 2.0 Flash & ElevenLabs</em>
 </p>
 
-[1](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/51427386/1cae6bf1-edb0-4abe-b53d-aa2598fde6a9/paste.txt)
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE.txt) file for details.
+
