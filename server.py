@@ -476,9 +476,16 @@ def gemini_stream():
 def elevenlabs_tts_proxy():
     """Proxy requests to ElevenLabs Text-to-Speech API"""
     try:
+        # Validate API key first
+        if not ELEVENLABS_API_KEY:
+            print("[ERROR] ElevenLabs API key not configured!")
+            return jsonify({'error': 'ElevenLabs API key not configured on server'}), 500
+        
         data = request.json
         voice_id = data.get('voice_id', '1SM7GgM6IMuvQlz2BwM3')
         text = data.get('text', '')
+        
+        print(f"[TTS] Processing text: {text[:50]}...")
         
         headers = {
             'Accept': 'audio/mpeg',
@@ -502,9 +509,15 @@ def elevenlabs_tts_proxy():
             timeout=30
         )
         
+        if not response.ok:
+            print(f"[ERROR] ElevenLabs TTS failed: {response.status_code} - {response.text}")
+            return jsonify({'error': f'TTS API error: {response.status_code}'}), response.status_code
+        
+        print(f"[TTS] Success - Generated {len(response.content)} bytes of audio")
         return response.content, response.status_code, {'Content-Type': 'audio/mpeg'}
         
     except Exception as e:
+        print(f"[ERROR] TTS exception: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
 @app.route('/api/elevenlabs/tts/stream', methods=['POST'])
@@ -638,5 +651,6 @@ if __name__ == '__main__':
         print("⚡ Powered by Google Gemini 2.0 Flash")
         print("=" * 60)
         app.run(debug=True, port=5000)
+
 
 
